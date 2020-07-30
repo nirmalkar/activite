@@ -1,12 +1,34 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Modal, Button, Calendar, Row, Col, Card } from "antd";
 import propTypes from "prop-types";
 
-const UserDetailsModal = ({ modalVisible, handleOk, handleCancel }) => {
-  function onPanelChange(value, mode) {
-    console.log(value);
-    console.log(mode);
-  }
+const UserDetailsModal = ({ modalVisible, handleOk, handleCancel, id }) => {
+  const [date, setDate] = useState("");
+  const [userTime, setUserTime] = useState("");
+  const { users } = useSelector((state) => state.userData);
+  const onPanelChange = (value) => {
+    // console.log(value.format("ll"));
+    setDate(value.format("ll"));
+  };
+
+  useEffect(() => {
+    if (id) {
+      users &&
+        users.map((user) => {
+          if (user.id === id) {
+            // console.log(user);
+            user.activity_periods.map((time) => {
+              if (time.start_time.split(" ", 3).join(" ") === date) {
+                // console.log(time);
+                setUserTime(time);
+              }
+            });
+            return user;
+          }
+        });
+    }
+  }, [date]);
   return (
     <div>
       <Modal
@@ -24,14 +46,12 @@ const UserDetailsModal = ({ modalVisible, handleOk, handleCancel }) => {
         <Row>
           <Col xs={20} sm={20} md={12} lg={16} xl={10}>
             <div className="site-calendar-demo-card">
-              <Calendar fullscreen={false} onPanelChange={onPanelChange} />
+              <Calendar fullscreen={false} onChange={onPanelChange} />
             </div>
           </Col>
           <Col xs={20} sm={20} md={12} lg={8} xl={10}>
             <Card style={{ minHeight: 323 }}>
-              <p>Start Time : Mar 16 2020 5:33PM</p>
-              <p>Start Time : Mar 16 2020 5:33PM</p>
-              <p>Start Time : Mar 16 2020 5:33PM</p>
+              {userTime && userTime.start_time}
             </Card>
           </Col>
         </Row>
@@ -44,6 +64,7 @@ UserDetailsModal.propTypes = {
   modalVisible: propTypes.bool.isRequired,
   handleOk: propTypes.func.isRequired,
   handleCancel: propTypes.func.isRequired,
+  id: propTypes.string.isRequired,
 };
 
 export default UserDetailsModal;
