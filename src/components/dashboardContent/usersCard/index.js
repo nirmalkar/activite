@@ -1,40 +1,41 @@
-import React from "react";
-import { Card, Avatar } from "antd";
-import {
-  EditOutlined,
-  EllipsisOutlined,
-  SettingOutlined,
-} from "@ant-design/icons";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Card, Avatar, Skeleton, Row, Col } from "antd";
+
+import { getUsers } from "../../../appRedux/action/userAction";
 
 const { Meta } = Card;
 
-const userCards = () => {
+const UserCards = (props) => {
+  const dispatch = useDispatch();
+  const { users, loading } = useSelector((state) => state.userData);
+  console.log(users);
+  useEffect(() => {
+    dispatch(getUsers());
+  }, []);
   return (
-    <div>
-      <Card
-        style={{ width: 300 }}
-        cover={
-          <img
-            alt="example"
-            src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-          />
-        }
-        actions={[
-          <SettingOutlined key="setting" />,
-          <EditOutlined key="edit" />,
-          <EllipsisOutlined key="ellipsis" />,
-        ]}
-      >
-        <Meta
-          avatar={
-            <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-          }
-          title="Card title"
-          description="This is the description"
-        />
-      </Card>
-    </div>
+    <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+      {users &&
+        users.map((user, i) => {
+          return (
+            <Col
+              className="gutter-row marginBottom-1"
+              span={{ xs: 24, sm: 12, md: 6, lg: 6 }}
+              key={i}
+            >
+              <Card style={{ width: 250, margin: "0 auto", cursor: "pointer" }}>
+                <Skeleton loading={loading} avatar active></Skeleton>
+                <Meta
+                  avatar={<Avatar src={user.avatar} />}
+                  title={user.real_name}
+                  description={user.profession}
+                />
+              </Card>
+            </Col>
+          );
+        })}
+    </Row>
   );
 };
 
-export default userCards;
+export default UserCards;
