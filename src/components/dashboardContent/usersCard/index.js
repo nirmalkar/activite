@@ -1,15 +1,27 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Card, Avatar, Skeleton, Row, Col } from "antd";
+import { Card, Avatar, Skeleton, Row, Col, Button } from "antd";
 
 import { getUsers } from "../../../appRedux/action/userAction";
+import UserDetailsModal from "../../userDetailsModal";
+import useToggleState from "../../../hooks/useToggleState";
 
 const { Meta } = Card;
 
-const UserCards = (props) => {
+const UserCards = () => {
   const dispatch = useDispatch();
   const { users, loading } = useSelector((state) => state.userData);
-  console.log(users);
+  const [modalVisible, setModalVisible] = useToggleState(false);
+  const showModal = () => {
+    setModalVisible(true);
+  };
+  const handleOk = (e) => {
+    setModalVisible(false);
+  };
+
+  const handleCancel = (e) => {
+    setModalVisible(false);
+  };
   useEffect(() => {
     dispatch(getUsers());
   }, []);
@@ -31,9 +43,17 @@ const UserCards = (props) => {
                   description={user.profession}
                 />
               </Card>
+              <Button block={true} onClick={showModal}>
+                Show User Details
+              </Button>
             </Col>
           );
         })}
+      <UserDetailsModal
+        modalVisible={modalVisible}
+        handleOk={handleOk}
+        handleCancel={handleCancel}
+      />
     </Row>
   );
 };
