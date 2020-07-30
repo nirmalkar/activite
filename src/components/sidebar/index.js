@@ -11,13 +11,8 @@ const SideBarContent = () => {
       <Menu theme="dark" mode="inline">
         <SubMenu key="sub1" title="Dashboard" icon={<DashboardOutlined />}>
           <Menu.Item key="1">
-            <Link to="/dashboard/users">
+            <Link to="/">
               <span>Users</span>
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="2">
-            <Link to="/dashboard/books">
-              <span>Books</span>
             </Link>
           </Menu.Item>
         </SubMenu>
