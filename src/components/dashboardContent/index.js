@@ -2,14 +2,15 @@ import React from "react";
 import { Layout } from "antd";
 
 import DashboardContentRoutes from "../../routes/dashboardContentRoutes";
+const { Content } = Layout;
 
 const DashboardContent = () => {
-  const { Content } = Layout;
-
   return (
-    <Content>
-      <DashboardContentRoutes />
-    </Content>
+    <Layout>
+      <Content className="dashboardContainer" style={{ overflow: "auto" }}>
+        <DashboardContentRoutes />
+      </Content>
+    </Layout>
   );
 };
 
