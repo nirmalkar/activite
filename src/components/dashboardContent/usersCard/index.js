@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Card, Avatar, Skeleton, Row, Col, Button } from "antd";
 
@@ -11,8 +11,10 @@ const { Meta } = Card;
 const UserCards = () => {
   const dispatch = useDispatch();
   const { users, loading } = useSelector((state) => state.userData);
+  const [id, setId] = useState("");
   const [modalVisible, setModalVisible] = useToggleState(false);
-  const showModal = () => {
+  const showModal = (id) => {
+    setId(id);
     setModalVisible(true);
   };
   const handleOk = (e) => {
@@ -43,7 +45,7 @@ const UserCards = () => {
                   description={user.profession}
                 />
               </Card>
-              <Button block={true} onClick={showModal}>
+              <Button block={true} onClick={() => showModal(user.id)}>
                 Show User Details
               </Button>
             </Col>
@@ -53,6 +55,7 @@ const UserCards = () => {
         modalVisible={modalVisible}
         handleOk={handleOk}
         handleCancel={handleCancel}
+        id={id}
       />
     </Row>
   );
