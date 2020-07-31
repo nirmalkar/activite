@@ -10,6 +10,7 @@ const { Meta } = Card;
 const UserCards = () => {
   const dispatch = useDispatch();
   const { users, loading } = useSelector((state) => state.userData);
+  const { searchUser } = useSelector((state) => state.userSearch);
   const { userInfoModalVisible } = useSelector(
     (state) => state.visibleUserInfoModal
   );
@@ -31,32 +32,38 @@ const UserCards = () => {
   return (
     <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
       {users &&
-        users.map((user, i) => {
-          return (
-            <Col
-              className="gutter-row marginBottom-1"
-              span={{ xs: 24, sm: 12, md: 6, lg: 6 }}
-              key={i}
-            >
-              <Card style={{ width: 250, margin: "0 auto", cursor: "pointer" }}>
-                <Skeleton loading={loading} avatar active></Skeleton>
-                <Meta
-                  avatar={<Avatar src={user.avatar} />}
-                  title={user.real_name}
-                  description={user.profession}
-                />
-              </Card>
-              <Button
-                block={true}
-                onClick={() =>
-                  showModal(user.id, user.real_name, user.profession)
-                }
+        users
+          .filter((user) =>
+            user.real_name.toLowerCase().includes(searchUser.toLowerCase())
+          )
+          .map((user, i) => {
+            return (
+              <Col
+                className="gutter-row marginBottom-1"
+                span={{ xs: 24, sm: 12, md: 6, lg: 6 }}
+                key={i}
               >
-                See User Activity
-              </Button>
-            </Col>
-          );
-        })}
+                <Card
+                  style={{ width: 250, margin: "0 auto", cursor: "pointer" }}
+                >
+                  <Skeleton loading={loading} avatar active></Skeleton>
+                  <Meta
+                    avatar={<Avatar src={user.avatar} />}
+                    title={user.real_name}
+                    description={user.profession}
+                  />
+                </Card>
+                <Button
+                  block={true}
+                  onClick={() =>
+                    showModal(user.id, user.real_name, user.profession)
+                  }
+                >
+                  See User Activity
+                </Button>
+              </Col>
+            );
+          })}
       <UserDetailsModal
         handleOk={handleOk}
         handleCancel={handleCancel}
