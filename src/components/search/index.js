@@ -1,15 +1,21 @@
 import React from "react";
-
+import { useDispatch } from "react-redux";
 import { Input } from "antd";
+
+import { filterUser } from "../../appRedux/action/filterActions";
 
 const { Search } = Input;
 
 const SearchInput = () => {
+  const dispatch = useDispatch();
+  const handleSearchChange = (e) => {
+    dispatch(filterUser(e.target.value));
+  };
   return (
     <>
       <Search
         placeholder="input search text"
-        onSearch={(value) => console.log(value)}
+        onChange={(e) => handleSearchChange(e)}
         style={{ width: 300 }}
       />
     </>
