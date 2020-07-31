@@ -45,7 +45,7 @@ const UserCards = () => {
               >
                 <Card
                   style={{
-                    width: 250,
+                    width: 220,
                     height: 130,
                     margin: "auto",
                     cursor: "pointer",
