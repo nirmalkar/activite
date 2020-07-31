@@ -13,9 +13,9 @@ const UserCards = () => {
   const { userInfoModalVisible } = useSelector(
     (state) => state.visibleUserInfoModal
   );
-  const [id, setId] = useState("");
-  const showModal = (id) => {
-    setId(id);
+  const [userData, setUserData] = useState("");
+  const showModal = (id, name, profession) => {
+    setUserData({ id, name, profession });
     dispatch(userInfoModal(!userInfoModalVisible));
   };
   const handleOk = (e) => {
@@ -28,7 +28,6 @@ const UserCards = () => {
   useEffect(() => {
     dispatch(getUsers());
   }, []);
-  useEffect(() => {}, [userInfoModalVisible]);
   return (
     <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
       {users &&
@@ -47,7 +46,12 @@ const UserCards = () => {
                   description={user.profession}
                 />
               </Card>
-              <Button block={true} onClick={() => showModal(user.id)}>
+              <Button
+                block={true}
+                onClick={() =>
+                  showModal(user.id, user.real_name, user.profession)
+                }
+              >
                 Show User Details
               </Button>
             </Col>
@@ -56,7 +60,9 @@ const UserCards = () => {
       <UserDetailsModal
         handleOk={handleOk}
         handleCancel={handleCancel}
-        id={id}
+        id={userData.id}
+        name={userData.name}
+        profession={userData.profession}
       />
     </Row>
   );
