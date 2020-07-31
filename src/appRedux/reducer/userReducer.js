@@ -2,6 +2,7 @@ import {
   GET_USER_REQUEST,
   GET_USER_SUCCESS,
   GET_USER_FAIL,
+  USER_INFO_MODAL_VISIBLE,
 } from "../../constants/actionTypes/userActionTypes";
 
 function userReducer(state = { users: null }, action) {
@@ -17,4 +18,13 @@ function userReducer(state = { users: null }, action) {
   }
 }
 
-export { userReducer };
+function userInfoModalReducer(state = { userInfoModalVisible: false }, action) {
+  switch (action.type) {
+    case USER_INFO_MODAL_VISIBLE:
+      return { ...state, userInfoModalVisible: action.payload };
+    default:
+      return state;
+  }
+}
+
+export { userReducer, userInfoModalReducer };

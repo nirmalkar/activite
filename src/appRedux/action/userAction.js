@@ -4,6 +4,7 @@ const {
   GET_USER_REQUEST,
   GET_USER_SUCCESS,
   GET_USER_FAIL,
+  USER_INFO_MODAL_VISIBLE,
 } = require("../../constants/actionTypes/userActionTypes");
 
 const getUsers = () => async (dispatch) => {
@@ -16,4 +17,8 @@ const getUsers = () => async (dispatch) => {
   }
 };
 
-export { getUsers };
+const userInfoModal = (data) => (dispatch) => {
+  dispatch({ type: USER_INFO_MODAL_VISIBLE, payload: data });
+};
+
+export { getUsers, userInfoModal };
