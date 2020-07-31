@@ -81,6 +81,7 @@ const UserDetailsModal = ({ handleOk, handleCancel, id, name, profession }) => {
         onOk={handleOk}
         width={800}
         onCancel={handleCancel}
+        destroyOnClose={true}
         footer={[
           <Button key="submit" type="primary" onClick={handleOk}>
             Close
