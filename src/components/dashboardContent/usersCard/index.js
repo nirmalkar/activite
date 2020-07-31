@@ -2,31 +2,33 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Card, Avatar, Skeleton, Row, Col, Button } from "antd";
 
-import { getUsers } from "../../../appRedux/action/userAction";
+import { getUsers, userInfoModal } from "../../../appRedux/action/userAction";
 import UserDetailsModal from "../../userDetailsModal";
-import useToggleState from "../../../hooks/useToggleState";
 
 const { Meta } = Card;
 
 const UserCards = () => {
   const dispatch = useDispatch();
   const { users, loading } = useSelector((state) => state.userData);
+  const { userInfoModalVisible } = useSelector(
+    (state) => state.visibleUserInfoModal
+  );
   const [id, setId] = useState("");
-  const [modalVisible, setModalVisible] = useToggleState(false);
   const showModal = (id) => {
     setId(id);
-    setModalVisible(true);
+    dispatch(userInfoModal(!userInfoModalVisible));
   };
   const handleOk = (e) => {
-    setModalVisible(false);
+    dispatch(userInfoModal(!userInfoModalVisible));
   };
 
   const handleCancel = (e) => {
-    setModalVisible(false);
+    dispatch(userInfoModal(!userInfoModalVisible));
   };
   useEffect(() => {
     dispatch(getUsers());
   }, []);
+  useEffect(() => {}, [userInfoModalVisible]);
   return (
     <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
       {users &&
@@ -52,7 +54,6 @@ const UserCards = () => {
           );
         })}
       <UserDetailsModal
-        modalVisible={modalVisible}
         handleOk={handleOk}
         handleCancel={handleCancel}
         id={id}
