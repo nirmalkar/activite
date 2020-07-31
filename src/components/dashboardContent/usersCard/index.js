@@ -52,7 +52,7 @@ const UserCards = () => {
                   showModal(user.id, user.real_name, user.profession)
                 }
               >
-                Show User Details
+                See User Activity
               </Button>
             </Col>
           );
