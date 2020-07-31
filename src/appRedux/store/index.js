@@ -1,12 +1,13 @@
 import { createStore, combineReducers, compose, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 
-import { userReducer } from "../reducer/userReducer";
+import { userReducer, userInfoModalReducer } from "../reducer/userReducer";
 
 const initialState = {};
 
 const reducer = combineReducers({
   userData: userReducer,
+  visibleUserInfoModal: userInfoModalReducer,
 });
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
