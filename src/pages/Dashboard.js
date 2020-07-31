@@ -4,7 +4,7 @@ import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons";
 
 import useToggleState from "../hooks/useToggleState";
 import SideBarContent from "../components/sidebar/index";
-import DashboardContent from "../components/dashboardContent/index";
+import DashboardContent from "../components/dashboardContent/";
 import SearchInput from "../components/search";
 
 const Home = () => {
