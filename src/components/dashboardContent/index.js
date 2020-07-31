@@ -11,8 +11,12 @@ const DashboardContent = () => {
   return (
     <Layout>
       <Content className="dashboardContainer" style={{ overflow: "auto" }}>
-        {users ? "" : <Spin />}
-        <UserCard />
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          {users ? "" : <Spin />}
+        </div>
+        <div className="m-auto">
+          <UserCard />
+        </div>
       </Content>
     </Layout>
   );

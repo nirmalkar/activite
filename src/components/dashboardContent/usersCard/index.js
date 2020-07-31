@@ -30,7 +30,7 @@ const UserCards = () => {
     dispatch(getUsers());
   }, []);
   return (
-    <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
+    <Row gutter={[16, 16]} justify="space-around">
       {users &&
         users
           .filter((user) =>
@@ -40,11 +40,16 @@ const UserCards = () => {
             return (
               <Col
                 className="gutter-row marginBottom-1"
-                span={{ xs: 24, sm: 12, md: 6, lg: 6 }}
+                span={{ sm: 24, md: 12, lg: 6, xl: 4 }}
                 key={i}
               >
                 <Card
-                  style={{ width: 250, margin: "0 auto", cursor: "pointer" }}
+                  style={{
+                    width: 250,
+                    height: 130,
+                    margin: "auto",
+                    cursor: "pointer",
+                  }}
                 >
                   <Skeleton loading={loading} avatar active></Skeleton>
                   <Meta
