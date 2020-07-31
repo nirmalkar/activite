@@ -26,9 +26,10 @@ const UserDetailsModal = ({ handleOk, handleCancel, id, name, profession }) => {
               ) {
                 setUserTime(time);
               }
+              return time;
             });
-            return user;
           }
+          return user;
         });
     }
   }, []);
@@ -52,9 +53,10 @@ const UserDetailsModal = ({ handleOk, handleCancel, id, name, profession }) => {
               if (time.start_time.split(" ", 3).join(" ") === date) {
                 setUserTime(time);
               }
+              return time;
             });
-            return user;
           }
+          return user;
         });
     }
   }, [date]);
@@ -66,9 +68,9 @@ const UserDetailsModal = ({ handleOk, handleCancel, id, name, profession }) => {
           user.activity_periods.map((time) => {
             return time.start_time.split(" ", 3).join(" ");
           });
-          return user;
         }
       }
+      return user;
     });
 
   return (
