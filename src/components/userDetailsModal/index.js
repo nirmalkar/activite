@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import moment from "moment";
 import { Modal, Button, Calendar, Row, Col, Card } from "antd";
 import propTypes from "prop-types";
 
-const UserDetailsModal = ({ modalVisible, handleOk, handleCancel, id }) => {
+const UserDetailsModal = ({ handleOk, handleCancel, id, name, profession }) => {
   const [date, setDate] = useState("");
   const [userTime, setUserTime] = useState("");
   const { users } = useSelector((state) => state.userData);
@@ -14,10 +15,36 @@ const UserDetailsModal = ({ modalVisible, handleOk, handleCancel, id }) => {
     setDate(value.format("ll"));
   };
   useEffect(() => {
+    if (id) {
+      users &&
+        users.map((user) => {
+          if (user.id === id) {
+            user.activity_periods.map((time) => {
+              if (
+                time.start_time.split(" ", 3).join(" ") ===
+                moment().format("ll")
+              ) {
+                setUserTime(time);
+              }
+            });
+            return user;
+          }
+        });
+    }
+  }, []);
+  useEffect(() => {
     setUserTime("");
   }, [userInfoModalVisible]);
   useEffect(() => {
     if (id) {
+      const dateArr = userOne
+        .filter((ele) => typeof ele === "object")[0]
+        .activity_periods.map((time) => {
+          return time.start_time.split(" ", 3).join(" ");
+        });
+      if (!dateArr.includes(date)) {
+        setUserTime("");
+      }
       users &&
         users.map((user) => {
           if (user.id === id) {
@@ -31,6 +58,19 @@ const UserDetailsModal = ({ modalVisible, handleOk, handleCancel, id }) => {
         });
     }
   }, [date]);
+  const userOne =
+    users &&
+    users.map((user) => {
+      if (id) {
+        if (user.id === id) {
+          user.activity_periods.map((time) => {
+            return time.start_time.split(" ", 3).join(" ");
+          });
+          return user;
+        }
+      }
+    });
+
   return (
     <div>
       <Modal
@@ -53,7 +93,38 @@ const UserDetailsModal = ({ modalVisible, handleOk, handleCancel, id }) => {
           </Col>
           <Col xs={20} sm={20} md={12} lg={8} xl={10}>
             <Card style={{ minHeight: 323 }}>
-              {userTime && userTime.start_time}
+              <p
+                style={{ fontSize: 24, fontWeight: 800, letterSpacing: ".5px" }}
+              >
+                {name}
+                <p style={{ fontSize: 14, fontWeight: 200 }}>{profession}</p>
+              </p>
+              {userTime ? (
+                <span style={{ fontSize: 16, fontWeight: 600 }}>
+                  Started at:&nbsp;
+                  <span style={{ fontSize: 16, fontWeight: "lighter" }}>
+                    {userTime && userTime.start_time}
+                  </span>
+                </span>
+              ) : (
+                <span>
+                  No activity found check&nbsp;
+                  <span style={{ fontSize: 16, fontWeight: 600 }}>
+                    another date
+                  </span>
+                </span>
+              )}
+              <br />
+              {userTime ? (
+                <span style={{ fontSize: 16, fontWeight: 600 }}>
+                  End at: &nbsp;
+                  <span style={{ fontSize: 16, fontWeight: "lighter" }}>
+                    {userTime && userTime.end_time}
+                  </span>
+                </span>
+              ) : (
+                ""
+              )}
             </Card>
           </Col>
         </Row>
@@ -63,10 +134,12 @@ const UserDetailsModal = ({ modalVisible, handleOk, handleCancel, id }) => {
 };
 
 UserDetailsModal.propTypes = {
-  modalVisible: propTypes.bool.isRequired,
-  handleOk: propTypes.func.isRequired,
-  handleCancel: propTypes.func.isRequired,
-  id: propTypes.string.isRequired,
+  modalVisible: propTypes.bool,
+  handleOk: propTypes.func,
+  handleCancel: propTypes.func,
+  id: propTypes.string,
+  name: propTypes.string,
+  profession: propTypes.string,
 };
 
 export default UserDetailsModal;
