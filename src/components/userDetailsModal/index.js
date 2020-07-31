@@ -7,20 +7,22 @@ const UserDetailsModal = ({ modalVisible, handleOk, handleCancel, id }) => {
   const [date, setDate] = useState("");
   const [userTime, setUserTime] = useState("");
   const { users } = useSelector((state) => state.userData);
+  const { userInfoModalVisible } = useSelector(
+    (state) => state.visibleUserInfoModal
+  );
   const onPanelChange = (value) => {
-    // console.log(value.format("ll"));
     setDate(value.format("ll"));
   };
-
+  useEffect(() => {
+    setUserTime("");
+  }, [userInfoModalVisible]);
   useEffect(() => {
     if (id) {
       users &&
         users.map((user) => {
           if (user.id === id) {
-            // console.log(user);
             user.activity_periods.map((time) => {
               if (time.start_time.split(" ", 3).join(" ") === date) {
-                // console.log(time);
                 setUserTime(time);
               }
             });
@@ -33,7 +35,7 @@ const UserDetailsModal = ({ modalVisible, handleOk, handleCancel, id }) => {
     <div>
       <Modal
         title="User Details"
-        visible={modalVisible}
+        visible={userInfoModalVisible}
         onOk={handleOk}
         width={800}
         onCancel={handleCancel}
