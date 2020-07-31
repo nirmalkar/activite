@@ -8,7 +8,6 @@ const { Content } = Layout;
 
 const DashboardContent = () => {
   const { users } = useSelector((state) => state.userData);
-  console.log(users);
   return (
     <Layout>
       <Content className="dashboardContainer" style={{ overflow: "auto" }}>
