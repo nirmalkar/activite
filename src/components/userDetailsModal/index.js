@@ -89,21 +89,17 @@ const UserDetailsModal = ({ handleOk, handleCancel, id, name, profession }) => {
         ]}
       >
         <Row>
-          <Col
-            xs={{ span: 22, offset: 1 }}
-            sm={{ span: 12 }}
-            md={{ span: 10, offset: 1 }}
-          >
-            <div className="site-calendar-demo-card">
+          <Col xs={{ span: 22, offset: 1 }} sm={{ span: 12 }} md={{ span: 10 }}>
+            <div className="site-calendar-demo-card marginBottom-1">
               <Calendar fullscreen={false} onChange={onPanelChange} />
             </div>
           </Col>
           <Col
             xs={{ span: 24, offset: 1 }}
             sm={{ span: 10, offset: 1 }}
-            md={{ span: 10, offset: 2 }}
+            md={{ span: 12 }}
           >
-            <Card style={{ minHeight: 323, marginTop: 2 }}>
+            <Card style={{ minHeight: 322 }}>
               <p
                 style={{ fontSize: 24, fontWeight: 800, letterSpacing: ".5px" }}
               >
@@ -119,7 +115,7 @@ const UserDetailsModal = ({ handleOk, handleCancel, id, name, profession }) => {
                 </span>
               ) : (
                 <span>
-                  No activity found check&nbsp;
+                  No activity found! Please check&nbsp;
                   <span style={{ fontSize: 16, fontWeight: 600 }}>
                     another date
                   </span>
