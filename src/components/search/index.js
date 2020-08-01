@@ -16,7 +16,6 @@ const SearchInput = () => {
       <Search
         placeholder="input search text"
         onChange={(e) => handleSearchChange(e)}
-        style={{ width: 300 }}
       />
     </>
   );
