@@ -14,4 +14,9 @@ You will also see any lint errors in the console.
 
 This Application shows Activities of listed people.
 User can see person's detail and hours he/she has worked.
+
+## Functionality
+
+Check user Activity between 21 Jun 2020 and 31 Jul 2020 (data hardcoded between these date in mock api)
+
 # activite
