@@ -15,6 +15,7 @@ const SearchInput = () => {
     <>
       <Search
         placeholder="input search text"
+        size="large"
         onChange={(e) => handleSearchChange(e)}
       />
     </>
