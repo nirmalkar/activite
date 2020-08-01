@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useDispatch } from "react-redux";
+import _ from "lodash";
 import { Input } from "antd";
 
 import { filterUser } from "../../appRedux/action/filterActions";
@@ -8,8 +9,12 @@ const { Search } = Input;
 
 const SearchInput = () => {
   const dispatch = useDispatch();
+  const delayedQuery = useCallback(
+    _.debounce((e) => dispatch(filterUser(e)), 800),
+    []
+  );
   const handleSearchChange = (e) => {
-    dispatch(filterUser(e.target.value));
+    delayedQuery(e.target.value);
   };
   return (
     <>
