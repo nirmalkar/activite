@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout } from "antd";
+import { Layout, Row, Col } from "antd";
 import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons";
 
 import useToggleState from "../hooks/useToggleState";
@@ -19,14 +19,20 @@ const Home = () => {
         </Sider>
         <Layout className="site-layout">
           <Header className="site-layout-background" style={{ padding: 0 }}>
-            {React.createElement(
-              collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
-              {
-                className: "trigger",
-                onClick: toggleCollapsed,
-              }
-            )}
-            <SearchInput />
+            <Row>
+              <Col xs={{ span: 7 }} lg={{ span: 6 }}>
+                {React.createElement(
+                  collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
+                  {
+                    className: "trigger",
+                    onClick: toggleCollapsed,
+                  }
+                )}
+              </Col>
+              <Col xs={{ span: 16 }} lg={{ span: 12 }}>
+                <SearchInput />
+              </Col>
+            </Row>
           </Header>
           <DashboardContent />
         </Layout>
