@@ -2,29 +2,28 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Card, Avatar, Skeleton, Row, Col, Button } from "antd";
 
-import { getUsers, userInfoModal } from "../../../appRedux/action/userAction";
+import { getUsers } from "../../../appRedux/action/userAction";
 import UserDetailsModal from "../../userDetailsModal";
+import useToggleState from "../../../hooks/useToggleState";
 
 const { Meta } = Card;
 
 const UserCards = () => {
+  const [userActModalVisible, setUserActModalVisible] = useToggleState(false);
+  const [userData, setUserData] = useState("");
   const dispatch = useDispatch();
   const { users, loading } = useSelector((state) => state.userData);
   const { searchUser } = useSelector((state) => state.userSearch);
-  const { userInfoModalVisible } = useSelector(
-    (state) => state.visibleUserInfoModal
-  );
-  const [userData, setUserData] = useState("");
   const showModal = (id, name, profession) => {
     setUserData({ id, name, profession });
-    dispatch(userInfoModal(!userInfoModalVisible));
+    setUserActModalVisible(!userActModalVisible);
   };
   const handleOk = (e) => {
-    dispatch(userInfoModal(!userInfoModalVisible));
+    setUserActModalVisible(!userActModalVisible);
   };
 
   const handleCancel = (e) => {
-    dispatch(userInfoModal(!userInfoModalVisible));
+    setUserActModalVisible(!userActModalVisible);
   };
   useEffect(() => {
     dispatch(getUsers());
@@ -70,6 +69,7 @@ const UserCards = () => {
             );
           })}
       <UserDetailsModal
+        modalVisible={userActModalVisible}
         handleOk={handleOk}
         handleCancel={handleCancel}
         id={userData.id}

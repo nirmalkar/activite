@@ -4,13 +4,17 @@ import moment from "moment";
 import { Modal, Button, Calendar, Row, Col, Card } from "antd";
 import propTypes from "prop-types";
 
-const UserDetailsModal = ({ handleOk, handleCancel, id, name, profession }) => {
+const UserDetailsModal = ({
+  handleOk,
+  handleCancel,
+  id,
+  name,
+  profession,
+  modalVisible,
+}) => {
   const [date, setDate] = useState("");
   const [userTime, setUserTime] = useState("");
   const { users } = useSelector((state) => state.userData);
-  const { userInfoModalVisible } = useSelector(
-    (state) => state.visibleUserInfoModal
-  );
   const onPanelChange = (value) => {
     setDate(value.format("ll"));
   };
@@ -35,7 +39,7 @@ const UserDetailsModal = ({ handleOk, handleCancel, id, name, profession }) => {
   }, []);
   useEffect(() => {
     setUserTime("");
-  }, [userInfoModalVisible]);
+  }, [modalVisible]);
   useEffect(() => {
     if (id) {
       const dateArr = userOne
@@ -72,12 +76,12 @@ const UserDetailsModal = ({ handleOk, handleCancel, id, name, profession }) => {
       }
       return user;
     });
-
+  console.log(modalVisible);
   return (
     <div>
       <Modal
         title="User Details"
-        visible={userInfoModalVisible}
+        visible={modalVisible}
         onOk={handleOk}
         width={800}
         onCancel={handleCancel}
